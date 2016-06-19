@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="3.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+	<display-name>SportAround</display-name>
+
+	<servlet>
+		<servlet-name>javax.ws.rs.core.Application</servlet-name>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>javax.ws.rs.core.Application</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+	
+
+	<login-config>
+		<realm-name>sportaround-realm</realm-name>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+	
+	<security-role>
+		<role-name>user</role-name>
+		<role-name>admin</role-name>
+	</security-role>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Rest Facade</web-resource-name>
+			<url-pattern>/rest/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>user</role-name>
+		</auth-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+		<url-pattern>/logout</url-pattern>
+		<http-method>GET</http-method>
+		<http-method>POST</http-method>
+		</web-resource-collection>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Unprotected Method</web-resource-name>
+			<url-pattern>/rest/users/addUser</url-pattern>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<web-resource-collection>
+			<url-pattern>/login</url-pattern>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+	</security-constraint>
+	
+	<session-config>
+		<cookie-config>
+			<http-only>false</http-only>
+		</cookie-config>
+		<tracking-mode>COOKIE</tracking-mode>
+	</session-config>
+</web-app>

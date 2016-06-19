@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence">
+
+	<persistence-unit name="SportAroundPersistence"
+		transaction-type="JTA">
+
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<jta-data-source>java:/DataBaseApp</jta-data-source>
+		<class>domain.user.User</class>
+		<class>domain.event.Event</class>
+		<class>domain.message.Message</class>
+		<class>domain.subscription.Subscription</class>
+		<class>domain.credential.Credential</class>
+		<class>domain.profile.Profile</class>
+
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="" />
+			<property name="hibernate.show_sql" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>

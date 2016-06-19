@@ -1,0 +1,281 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>sportaround</groupId>
+  <artifactId>SportAround</artifactId>
+  <version>0.0.1</version>
+ <packaging>war</packaging>
+  <name>SportAround</name>
+
+<build>
+	<plugins>
+
+<!-- Plugin Maven : using about creating war web app -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-war-plugin</artifactId>
+			<version>2.6</version>
+			<configuration>
+				<webResources>
+					<resource>
+						<directory>src/main/webapp/</directory>
+					</resource>
+				</webResources>
+			</configuration>
+		</plugin>
+		<plugin>
+            <groupId>org.jboss.as.plugins</groupId>
+            <artifactId>jboss-as-maven-plugin</artifactId>
+			<version>7.7.Final</version>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-eclipse-plugin</artifactId>
+			<version>2.9</version>
+			<configuration>
+				<downloadSources>true</downloadSources>
+				<downloadJavadocs>true</downloadJavadocs>
+			</configuration>
+		</plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.5</version>
+			<configuration>
+				<source>7</source>
+				<target>7</target>
+			</configuration>
+		</plugin>
+<!-- end Plugin Maven -->
+
+<!-- Plugin Maven : give us a modulable compiler for java -->
+		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+
+					<port>9000</port>
+					<tempWebappDirectory>${basedir}/target/site/tempdir</tempWebappDirectory>
+
+					<reportPlugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<version>2.8.1</version>
+							<configuration>
+								<links>
+									<link>http://commons.apache.org/lang/api</link>
+									<link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+								</links>
+								<minmemory>512m</minmemory>
+								<maxmemory>1g</maxmemory>
+								<linksource>true</linksource>
+							</configuration>
+							<reportSets>
+								<reportSet>
+									<reports>
+										<report>aggregate</report>
+										<report>test-aggregate</report>
+										<report>fix</report>
+										<report>test-fix</report>
+									</reports>
+								</reportSet>
+							</reportSets>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-jxr-plugin</artifactId>
+							<version>2.1</version>
+							<configuration>
+								<aggregate>true</aggregate>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-report-plugin</artifactId>
+							<version>2.6</version>
+							<configuration>
+								<argLine>-Xmx1024m -XX:MaxPermSize=512m</argLine>
+								<aggregate>true</aggregate>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>cobertura-maven-plugin</artifactId>
+							<version>2.4</version>
+							<configuration>
+								<formats>
+									<format>xml</format>
+									<format>html</format>
+								</formats>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-checkstyle-plugin</artifactId>
+							<version>2.6</version>
+							<configuration>
+								<configLocation>misc/checks.xml</configLocation>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>findbugs-maven-plugin</artifactId>
+							<version>2.3</version>
+							<configuration>
+								<findbugsXmlOutput>true</findbugsXmlOutput>
+								<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+								<threshold>Low</threshold>
+								<effort>Max</effort>
+								<xmlOutput>true</xmlOutput>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>jdepend-maven-plugin</artifactId>
+							<version>2.0-beta-2</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-pmd-plugin</artifactId>
+							<version>2.7.1</version>
+							<configuration>
+								<targetJdk>${compileSource}</targetJdk>
+								<aggregate>true</aggregate>
+								<linkXref>true</linkXref>
+								<sourceEncoding>utf-8</sourceEncoding>
+								<minimumTokens>100</minimumTokens>
+							</configuration>
+						</plugin>
+						<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-project-info-reports-plugin</artifactId> 
+							<version>2.3.1</version> </plugin> -->
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>javancss-maven-plugin</artifactId>
+							<version>2.0</version>
+						</plugin>
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>l10n-maven-plugin</artifactId>
+							<version>1.0-alpha-2</version>
+							<configuration>
+								<locales>
+									<locale>en</locale>
+									<locale>fr</locale>
+								</locales>
+								<aggregate>true</aggregate>
+							</configuration>
+						</plugin>
+					</reportPlugins>
+				</configuration>
+			</plugin>
+<!-- end Plugin Maven -->
+
+<!-- Plugin Wildfly : gives us the possibility to use wildfly webapp server-->
+			<plugin>
+			    <groupId>org.wildfly.plugins</groupId>
+			    <artifactId>wildfly-maven-plugin</artifactId>
+			    <version>1.1.0.Alpha7</version>
+			</plugin>
+			<plugin>
+			<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.5.201505241946</version>
+				<configuration>
+			    		<dataFile>target/jacoco.exec</dataFile>
+				</configuration>
+			<executions>
+			    <execution>
+				<id>pre-unit-test</id>
+				<goals>
+				    <goal>prepare-agent</goal>
+				</goals>
+				<configuration>
+					<propertyName>jacoco.agent.argLine</propertyName>
+					<destFile>target/jacoco.exec</destFile>
+				</configuration>
+			    </execution>
+			   <execution>
+				<id>default-report</id>
+				<phase>verify</phase>
+				<goals>
+				    <goal>report</goal>
+				</goals>
+			    </execution>
+			</executions>
+	 	</plugin>
+	</plugins>	
+</build>
+<!-- end Plugin Wildfly -->
+
+	<dependencies>
+
+<!-- REST :		web app servlet implementation -->
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>7.0</version>
+		</dependency>
+<!-- end REST -->
+
+<!-- Test : 	junit for unit testing
+				mockito to create some mock
+				unit test over web app 
+				link between arquillian and web app server (wildfly) -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version> 
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+		    <artifactId>mockito-all</artifactId>
+		    <version>1.10.19</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<version>1.1.7.Final</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+		  <groupId>org.wildfly.arquillian</groupId>
+		  <artifactId>wildfly-arquillian-container-managed</artifactId>
+		  <version>1.1.0.Final</version>
+		  <scope>test</scope>
+		</dependency>
+<!-- end Test -->
+
+
+<!-- Code coverage:		the jacoco dependecy
+						the link between jacoco and arquillian -->
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>org.jacoco.core</artifactId>
+			<version>0.7.6.201602180812</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian.extension</groupId>
+			<artifactId>arquillian-jacoco</artifactId>
+			<version>1.0.0.Alpha8</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+<!-- end Code coverage -->
+
+<!-- Project propreties: 	the encoding,
+							the plugin for code coverage
+							where is create the coverage repport
+							the language for sonar analyse -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.language>java</sonar.language>
+	</properties>
+ <!-- end: Project properties -->
+
+</project>
+<!-- end Project -->
